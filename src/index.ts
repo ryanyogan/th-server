@@ -1,15 +1,27 @@
-import express from "express";
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require("dotenv").config();
+
+import express, { Application } from "express";
 import { ApolloServer } from "apollo-server-express";
 import { typeDefs, resolvers } from "./graphql";
+import { connectDatabase } from "./database";
 
-const app = express();
-const port = 9000;
+const port = process.env.PORT || 9000;
 
-app.use(express.json());
+const mount = async (app: Application) => {
+  app.use(express.json());
 
-const server = new ApolloServer({ typeDefs, resolvers });
-server.applyMiddleware({ app, path: "/api" });
+  const db = await connectDatabase();
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    context: () => ({ db }),
+  });
 
-app.listen(port);
+  server.applyMiddleware({ app, path: "/api" });
 
-console.log(`[app] : http://localhost:${port}`);
+  app.listen(port);
+  console.log(`[app] : http://localhost:${port}`);
+};
+
+mount(express());
