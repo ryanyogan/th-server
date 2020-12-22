@@ -3,6 +3,9 @@ import { Collection, ObjectId } from "mongodb";
 export enum ListingType {
   APARTMENT = "APARTMENT",
   HOUSE = "HOUSE",
+  CONDOMINIUM = "CONDOMINIUM",
+  RESORT = "RESORT",
+  HOTEL = "HOTEL",
 }
 
 interface BookingsIndexMonth {
@@ -41,6 +44,7 @@ export interface User {
   income: number;
   bookings: ObjectId[];
   listings: ObjectId[];
+  authorized?: boolean;
 }
 
 export interface Viewer {
