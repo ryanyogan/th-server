@@ -20,7 +20,7 @@ export const Google = {
 
     const { data } = await google.people({ version: "v1", auth }).people.get({
       resourceName: "people/me",
-      personFields: "emailAddress,names,photos",
+      personFields: "emailAddresses,names,photos",
     });
 
     return { user: data };
