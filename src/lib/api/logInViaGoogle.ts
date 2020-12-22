@@ -1,11 +1,20 @@
-import { Google } from ".";
+import { Response } from "express";
+import { cookieOptions, Google } from ".";
 import { Database, User } from "../types";
 
-export const logInViaGoogle = async (
-  code: string,
-  token: string,
-  db: Database
-): Promise<User | undefined> => {
+interface Props {
+  code: string;
+  token: string;
+  db: Database;
+  res: Response;
+}
+
+export const logInViaGoogle = async ({
+  code,
+  token,
+  db,
+  res,
+}: Props): Promise<User | undefined> => {
   const { user } = await Google.login(code);
 
   if (!user) {
@@ -50,6 +59,11 @@ export const logInViaGoogle = async (
 
     viewer = insertResult.ops[0];
   }
+
+  res.cookie("viewer", userId, {
+    ...cookieOptions,
+    maxAge: 365 * 24 * 60 * 60 * 1000, // 1 Year
+  });
 
   return viewer;
 };
