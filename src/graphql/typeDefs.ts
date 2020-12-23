@@ -4,9 +4,6 @@ export const typeDefs = gql`
   enum ListingType {
     APARTMENT
     HOUSE
-    CONDOMINIUM
-    RESORT
-    HOTEL
   }
 
   type Viewer {

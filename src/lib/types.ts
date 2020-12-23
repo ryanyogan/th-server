@@ -1,11 +1,8 @@
 import { Collection, ObjectId } from "mongodb";
 
 export enum ListingType {
-  APARTMENT = "APARTMENT",
-  HOUSE = "HOUSE",
-  CONDOMINIUM = "CONDOMINIUM",
-  RESORT = "RESORT",
-  HOTEL = "HOTEL",
+  Apartment = "APARTMENT",
+  House = "HOUSE",
 }
 
 interface BookingsIndexMonth {
